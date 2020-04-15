@@ -9,14 +9,14 @@ import {DBProvider} from "./db/db-provider";
 import {AuthRouter} from "./auth/auth.router";
 import {GithubReposRouter} from "./github-repos/github-repos.router";
 import {ErrorHandler} from "./middlewares/error-handler";
-import {GithubReposRepository} from "./github-repos/github-repos.repository";
-import {GithubReposService} from "./github-repos/github-repos.service";
+import cors from 'cors';
 
 (async () => {
   try {
     await Container.get(DBProvider).createInitialSchema();
     const app = express();
     const router = express.Router();
+    app.use(cors());
     router.use(bodyParser.urlencoded({ extended: false }));
     router.use(bodyParser.json());
     app.use('/', router);
