@@ -1,0 +1,44 @@
+{
+  "rules": {
+    "prettier": true,
+    "no-unnecessary-local-variable": true,
+    "prefer-for-of": true,
+    "no-unnecessary-initializer": true,
+    "prefer-object-spread": false,
+    "no-return-await": true,
+    "no-var-requires": true,
+    "no-bitwise": true,
+    "no-conditional-assignment": true,
+    "no-duplicate-super": true,
+    "no-duplicate-switch-case": true,
+    "no-dynamic-delete": true,
+    "no-floating-promises": true,
+    "no-implicit-dependencies": [true, "dev"],
+    "no-invalid-template-strings": true,
+    "no-misused-new": true,
+    "no-object-literal-type-assertion": true,
+    "no-string-literal": true,
+    "no-unused-expression": [true, "allow-new"],
+    "prefer-conditional-expression": true,
+    "restrict-plus-operands": true,
+    "deprecation": true,
+    "max-file-line-count": [false, 300],
+    "prefer-readonly": false,
+    "unnecessary-bind": true,
+    "type-literal-delimiter": true,
+    "prefer-while": true,
+    "no-unnecessary-qualifier": true,
+    "no-unnecessary-callback-wrapper": true,
+    "binary-expression-operand-order": true,
+    "array-type": [true, "array"],
+    "arrow-return-shorthand": true,
+    "no-this-assignment": [
+      true,
+      {
+        "allow-destructuring": true
+      }
+    ],
+    "no-require-imports": true,
+    "typedef": [true, "call-signature"]
+  }
+}
