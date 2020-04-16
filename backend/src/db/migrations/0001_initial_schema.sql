@@ -5,8 +5,7 @@ CREATE TABLE sirin.users(
 	user_id varchar NOT NULL,
 	email varchar NOT NULL,
 	password_hash varchar NOT NULL
-	CONSTRAINT user_id_pk PRIMARY KEY (user_id),
-	CONSTRAINT email_pk PRIMARY KEY (email)
+	CONSTRAINT user_id_pk PRIMARY KEY (user_id, email)
 )
 
 CREATE TABLE sirin.repos(

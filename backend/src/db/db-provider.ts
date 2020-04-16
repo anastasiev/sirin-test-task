@@ -11,10 +11,10 @@ export class DBProvider {
     private readonly migrationsFolder: string;
     constructor() {
         this.database = 'sirin';
-        const username = process.env.DB_USERNAME || 'ngp';
-        const password = process.env.DB_PASSWORD || 'wombat-wookie-charleston';
-        this.connectionString = `postgres://${username}:${password}@localhost:5432`;
-        this.migrationsFolder = path.resolve(__dirname, './');
+        const username = process.env.DB_USERNAME || 'postgr';
+        const password = process.env.DB_PASSWORD || 'postgr';
+        this.connectionString = `postgres://${username}:${password}@db:5432`;
+        this.migrationsFolder = path.resolve(__dirname, './migrations');
     }
 
     public async createDbConnection(): Promise<Knex> {

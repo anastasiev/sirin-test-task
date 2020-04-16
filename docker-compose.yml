@@ -1,0 +1,22 @@
+version: '3'
+services:
+  db:
+    image: "postgres:11.1-alpine"
+    environment:
+      POSTGRES_USER: postgr
+      POSTGRES_PASSWORD: postgr
+      POSTGRES_DB: sirin
+    ports:
+      - "5432:5432"
+  back:
+    build: ./backend
+    depends_on:
+      - db
+    ports:
+      - "3004:3004"
+  front:
+    build: ./frontend
+    depends_on:
+      - back
+    ports:
+      - "3000:3000"

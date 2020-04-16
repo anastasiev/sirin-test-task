@@ -4,7 +4,7 @@
   "private": true,
   "main": "build/src/app.js",
   "scripts": {
-    "build": "npm run-script copy:migrations && tsc",
+    "build": "tsc",
     "start": "node ./build/app.js",
     "copy:migrations": "copyfiles -f ./src/db/migrations/*.sql ./build/db/migrations"
   },

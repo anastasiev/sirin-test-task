@@ -10,10 +10,26 @@ import {AuthRouter} from "./auth/auth.router";
 import {GithubReposRouter} from "./github-repos/github-repos.router";
 import {ErrorHandler} from "./middlewares/error-handler";
 import cors from 'cors';
+let connectionCount = 5;
 
 (async () => {
   try {
-    await Container.get(DBProvider).createInitialSchema();
+    // try to connect to db 5 times, wait till db up and run in docker
+    while (connectionCount) {
+      try{
+        await Container.get(DBProvider).createInitialSchema();
+        break
+      } catch (e) {
+        console.log( `Cannot connect to db, ${connectionCount} attempts left` );
+        await new Promise(resolve => setTimeout(resolve, 5000));
+        connectionCount--;
+      }
+    }
+    if(connectionCount === 0) {
+      console.log(`Db server are not running...`);
+      process.exit(1)
+    }
+
     const app = express();
     const router = express.Router();
     app.use(cors());
@@ -31,7 +47,7 @@ import cors from 'cors';
       console.log( `server started at http://localhost:${ PORT }` );
     } );
   }catch (e) {
-    process.stdout.write(`Failed to start server: ${e}\n`);
+    console.log(`Failed to start server: ${e}\n`);
     process.exit(1)
   }
 })();
