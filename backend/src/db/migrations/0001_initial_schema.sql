@@ -4,7 +4,7 @@ CREATE SCHEMA sirin;
 CREATE TABLE sirin.users(
 	user_id varchar NOT NULL,
 	email varchar NOT NULL,
-	password_hash varchar NOT NULL
+	password_hash varchar NOT NULL,
 	CONSTRAINT user_id_pk PRIMARY KEY (user_id, email)
 )
 
