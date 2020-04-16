@@ -6,8 +6,7 @@ CREATE TABLE sirin.users(
 	email varchar NOT NULL,
 	password_hash varchar NOT NULL,
 	CONSTRAINT user_id_pk PRIMARY KEY (user_id, email)
-)
-
+);
 CREATE TABLE sirin.repos(
 	repo_id varchar NOT NULL,
 	repo_name varchar NOT NULL,
@@ -18,8 +17,8 @@ CREATE TABLE sirin.repos(
 	issues integer NOT NULL DEFAULT 0,
 	created timestamptz NOT NULL,
 	CONSTRAINT repo_id_pk PRIMARY KEY (repo_id)
-)
+);
 CREATE TABLE sirin.users_repos(
 	repo_id varchar NOT NULL,
 	user_id varchar NOT NULL
-)
+);
