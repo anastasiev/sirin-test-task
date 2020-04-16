@@ -11,6 +11,7 @@
 - joi - payload validation
 - axios - http client
 - typedi - dependency injection
+- jwt token for authenticition
 ### Frontend:
 - reactjs
 - redux for authentication info storing
