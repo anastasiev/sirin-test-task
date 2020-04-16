@@ -7,6 +7,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { deepOrange } from '@material-ui/core/colors';
 import {createRepo, deleteRepo, getRepos, syncRepo} from "../../redux/api";
 import ReposTable from "./repos-table";
+import ColoredTextField from "../elements";
 
 const isWordWithoutSpecialSymbols = (word = '') => {
   const re = /^[a-zA-Z0-9\-]+$/;
@@ -27,6 +28,7 @@ const ReposPage = ({auth, logout}) => {
   const [repos, setRepos] = useState([]);
   const [error, setError] = useState('');
   const [repoInfo, setRepoInfo] = useState('');
+  const [repoLoading, setRepoLoading] = useState(false);
   useEffect(() => {
     (async() => {
       try{
@@ -78,12 +80,15 @@ const ReposPage = ({auth, logout}) => {
     }
 
     try {
+      setRepoLoading(true);
       const repo = await createRepo(ownerName, repoName, token);
       setRepos(savedRepos => [repo, ...savedRepos]);
       setRepoInfo('');
       setError('');
     } catch (e) {
       setError('Repository does not exist')
+    } finally {
+      setRepoLoading(false);
     }
   };
 
@@ -149,7 +154,7 @@ const ReposPage = ({auth, logout}) => {
         padding="25px"
       >
           <Box width="80%">
-            <TextField
+            <ColoredTextField
               fullWidth
               helperText={error}
               error={Boolean(error)}
@@ -158,14 +163,16 @@ const ReposPage = ({auth, logout}) => {
               variant="outlined"
               value={repoInfo}
               onChange={(e) => setRepoInfo(e.target.value)}
+              disabled={repoLoading}
             />
           </Box>
           <Box
             component={Button}
             width="100px"
-            variant="contained" color="primary"
+            variant="outlined"
             onClick={addRepo}
             marginLeft="25px"
+            disabled={repoLoading}
           >
             Create
           </Box>

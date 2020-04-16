@@ -11,7 +11,7 @@ import { makeStyles, withStyles } from '@material-ui/core/styles';
 
 import {login, signup} from "../../redux/api";
 import {authSuccess} from "../../redux/actions";
-import {deepOrange} from "@material-ui/core/colors";
+import ColoredTextField from "../elements";
 
 const validateEmail = (email) => {
   const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -27,22 +27,6 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const CssTextField = withStyles({
-  root: {
-    '& label.Mui-focused': {
-      color: '#ff8a65',
-    },
-    '& .MuiInput-underline:after': {
-      borderBottomColor: '#ff8a65',
-    },
-    '& .MuiOutlinedInput-root': {
-      '&.Mui-focused fieldset': {
-        borderColor: '#ff8a65',
-      },
-    },
-  },
-})(TextField);
-
 const LoginPage = ({authSuccess}) => {
   const [isSignup, switchForm] = useState(false);
   const [emailValue, setEmail] = useState('');
@@ -54,6 +38,7 @@ const LoginPage = ({authSuccess}) => {
     password: '',
     confirm: ''
   });
+  const [loginLoading, setLoginLoading] = useState(false);
   const auth = async () => {
       if (emailValue === '') {
         setErrors({...errors, email: 'Required'});
@@ -87,10 +72,14 @@ const LoginPage = ({authSuccess}) => {
       }
       const api = isSignup ? signup : login;
       try {
+        setLoginLoading(true);
         const responseData = await api(emailValue, passwordValue);
         authSuccess(responseData);
       } catch (e) {
+        console.log(e);
         setErrors((errors) => ({...errors, password: 'Invalid credentials'}) );
+      } finally {
+        setLoginLoading(false);
       }
   };
   const {email, password, confirm} = errors;
@@ -120,17 +109,18 @@ const LoginPage = ({authSuccess}) => {
           </Typography>
         </Box>
         <Box paddingBottom="20px" width="100%">
-          <CssTextField
+          <ColoredTextField
             fullWidth
             helperText={email}
             error={Boolean(email)}
             label="Email"
             variant="outlined"
             onChange={(e) => setEmail(e.target.value)}
+            disabled={loginLoading}
           />
         </Box>
         <Box paddingBottom="20px" width="100%">
-          <CssTextField
+          <ColoredTextField
             fullWidth
             type="password"
             helperText={password}
@@ -138,12 +128,13 @@ const LoginPage = ({authSuccess}) => {
             label="Password"
             variant="outlined"
             onChange={(e) => setPassword(e.target.value)}
+            disabled={loginLoading}
           />
         </Box>
         {
           isSignup && (
             <Box paddingBottom="20px" width="100%">
-              <CssTextField
+              <ColoredTextField
                 fullWidth
                 label="Confirm password"
                 type="password"
@@ -151,6 +142,7 @@ const LoginPage = ({authSuccess}) => {
                 error={Boolean(confirm)}
                 variant="outlined"
                 onChange={(e) => setConfirmPassword(e.target.value)}
+                disabled={loginLoading}
               />
             </Box>
           )
@@ -176,6 +168,7 @@ const LoginPage = ({authSuccess}) => {
           variant="contained" color="primary"
           onClick={auth}
           className={classes.button}
+          disabled={loginLoading}
         >
           { isSignup ? 'Signup': 'Login' }
         </Box>
