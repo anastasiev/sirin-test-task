@@ -22,7 +22,7 @@
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
     "copyfiles": "^2.1.0",
-    "class-transformer": "^0.2.3",
+    "class-transformer": "^0.3.1",
     "class-validator": "^0.11.0",
     "jest": "^24.8.0",
     "jest-cli": "^24.9.0",
